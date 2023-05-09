@@ -1,0 +1,55 @@
+#include <LiquidCrystal.h>
+
+//Define os pinos que serão utilizados para ligação ao display
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+void setup(){
+  //Inicia o Monitor Serial
+  Serial.begin(9600);
+  
+  //Define o número de colunas e linhas do LCD
+  lcd.begin(16, 2);
+  
+  // Configura os pinos
+  pinMode(A0, INPUT);
+  pinMode(A4, OUTPUT);
+  pinMode(A5, OUTPUT);
+  pinMode(7, OUTPUT);
+  pinMode(8, OUTPUT);
+}
+  
+void loop(){
+  //Declaração das variáveis
+  float sensor = analogRead(0);
+  float sensorUmidade = (sensor * 100)/1023;
+  
+  //Imprime uma saída no Monitor Serial
+  Serial.print("Sensor de umidade: ");
+  Serial.print(sensorUmidade);
+  Serial.println("%");
+
+  if(sensorUmidade >= 60){
+   //Faz com que a informação saia do arduino
+   digitalWrite(7, HIGH);
+   digitalWrite(8, HIGH);
+   //Limpa a tela do lcd
+   lcd.clear();
+   //Posiciona o cursor na coluna 3, linha 0;
+   lcd.setCursor(2, 0);
+   //Saída de texto no lcd
+   lcd.print("Umidade do ar:");
+   lcd.setCursor(2, 1);
+   lcd.print("Alta"); 
+   delay(1000);  
+  }
+  else{
+    digitalWrite(7, LOW);
+    digitalWrite(8, LOW);
+    lcd.clear();
+    lcd.setCursor(2, 0);
+    lcd.print("Umidade do ar: ,");
+    lcd.setCursor(2, 1);
+    lcd.print("Moderada"); 
+    delay(1000);
+   };
+}
