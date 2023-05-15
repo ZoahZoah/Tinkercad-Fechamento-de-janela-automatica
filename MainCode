@@ -250,7 +250,7 @@ void loop(){
   Serial.println("%");
 
   if(sensorUmidade >= 70){
-   	//Faz com que a informação saia do arduino
+  	//Faz com que a informação saia do arduino
    	digitalWrite(7, HIGH);
    	digitalWrite(8, HIGH);
    	//Limpa a tela do lcd
@@ -262,17 +262,30 @@ void loop(){
    	lcd.setCursor(2, 1);
    	lcd.print("Alta");
     tocarMusica();
+    delay(1000);
   }
-  else{
-    digitalWrite(7, LOW);
-    digitalWrite(8, LOW);
-    lcd.clear();
-    lcd.setCursor(2, 0);
-    lcd.print("Umidade do ar: ,");
-    lcd.setCursor(2, 1);
-    lcd.print("Moderada"); 
-    noTone(10);
-   };
+    else if((sensorUmidade >=30) && (sensorUmidade <70)){
+        digitalWrite(7, LOW);
+        digitalWrite(8, LOW);
+        lcd.clear();
+        lcd.setCursor(2, 0);
+        lcd.print("Umidade do ar: ,");
+        lcd.setCursor(2, 1);
+        lcd.print("Moderada"); 
+        noTone(10);
+        delay(1000);
+      }
+    else{
+      digitalWrite(7, LOW);
+      digitalWrite(8, LOW);
+      lcd.clear();
+      lcd.setCursor(2, 0);
+      lcd.print("Umidade do ar: ,");
+      lcd.setCursor(2, 1);
+      lcd.print("Baixa"); 
+      noTone(10);
+      delay(1000);
+    };
 }
 
 void tocarMusica(){
